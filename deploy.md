@@ -317,6 +317,19 @@ location /static/ {
 	alias /home/ubuntu/{프로젝트이름}/staticfiles/;
 }
 ```
+```
+
+server_name *.amazonaws.com;
+
+location / {
+		uwsgi_pass unix:///home/ubuntu/insta/tmp/insta.sock;
+		include uwsgi_params;
+}
+
+location /static/ {
+	alias /home/ubuntu/insta/staticfiles/;
+}
+```
 
 - 결과 붙여넣기 위한 빈칸
 
@@ -338,7 +351,7 @@ sudo vi /etc/nginx/sites-enabled/default
 
 
 - 아래의 표시된 부분 수정
-  - `i` 버튼으로 수정모드로 전환
+  - `i` 버튼으로 수정모드로 전환 
   - 아래의 부분으로 방향키를 이용하여 이동
   - 수정
   - `esc` 로 수정모드 빠져나오기
@@ -385,7 +398,7 @@ mkdir -p .config/uwsgi/
 ```shell
 touch .config/uwsgi/{프로젝트이름}.ini
 ```
-
+touch .config/uwsgi/insta.ini
 
 
 
@@ -478,6 +491,8 @@ WantedBy=multi-user.target
 ```shell
 sudo ln -s ~/{프로젝트이름}/.config/uwsgi/uwsgi.service /etc/systemd/system/uwsgi.service
 ```
+
+sudo ln -s ~/insta/.config/uwsgi/uwsgi.service /etc/systemd/system/uwsgi.service
 
 - **폴더 권한설정**
 ```bash
